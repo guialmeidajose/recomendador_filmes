@@ -164,8 +164,8 @@ k = 0
 i = 0
 l = 0
 while i < 20:
-    j = ix[l]
-    if j not in my_rated and movieList_df["number of ratings"].iloc[int(j)] > 30:
+    j = ix[l].numpy()
+    if my_rated[j] == 0 and movieList_df["number of ratings"].iloc[int(j)] > 30:
         print(f'Predicting rating {my_predictions[j]:0.2f} for movie {movieList[j]}')
         i += 1
     l += 1

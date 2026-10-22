@@ -169,8 +169,8 @@ if st.button("Salvar Avaliações", type="primary"):
     i = 0
     l = 0
     while i < 20:
-        j = ix[l]
-        if j not in vetor_notas and movieList_df["number of ratings"].iloc[int(j)] > 30:
+        j = ix[l].numpy()
+        if vetor_notas[j] == 0 and movieList_df["number of ratings"].iloc[int(j)] > 30:
             st.write(f'Previsão de avaliação {my_predictions[j]:0.2f} para o filme {movieList[j]}')
             i += 1
         l += 1
@@ -185,8 +185,8 @@ if st.button("Salvar Avaliações", type="primary"):
     i = 0
     l = 0
     while i < 20:
-        j = ix[l]
-        if j not in vetor_notas and movieList_df["number of ratings"].iloc[int(j)] > 20:
+        j = ix[l].numpy()
+        if vetor_notas[j] == 0 and movieList_df["number of ratings"].iloc[int(j)] > 20:
             st.write(f'Previsão de avaliação {my_predictions[j]:0.2f} para o filme {movieList[j]}')
             i += 1
         l += 1
@@ -195,6 +195,8 @@ if st.button("Salvar Avaliações", type="primary"):
     st.header('Avaliação dada comparada ao do modelo treinado:')
     for i in range(len(vetor_notas)):
         if vetor_notas[i] > 0:
-            st.write("Filme: ", movieList[i], " . Nota dada pelo usuário:", vetor_notas[i]," Nota prevista: ", my_predictions[i])
+            st.subheader(f'Filme: {movieList[i]}')
+            st.write("Nota dada pelo usuário: ", vetor_notas[i])
+            st.write("Nota prevista: ", my_predictions[i])
 
 
