@@ -161,7 +161,7 @@ if st.button("Salvar Avaliações", type="primary"):
 
     my_predictions = pm[:,0]
 
-    st.header("Predições")
+    st.header("Filmes recomandados e previsão de avaliação do usuário:")
 
     # sort predictions
     ix = tf.argsort(my_predictions, direction='DESCENDING')
@@ -176,9 +176,25 @@ if st.button("Salvar Avaliações", type="primary"):
         l += 1
 
 
-    st.header('Avaliação dada comparada ao do modelo treinado')
-    for i in range(len(my_ratings)):
-        if my_ratings[i] > 0:
-            print(f'Original {my_ratings[i]}, Predição {my_predictions[i]:0.2f} para {movieList[i]}')
+
+    st.header("Filmes não recomandados e previsão de avaliação do usuário:")
+
+    # sort predictions
+    ix = tf.argsort(my_predictions, direction='ASCENDING')
+    k = 0
+    i = 0
+    l = 0
+    while i < 20:
+        j = ix[l]
+        if j not in vetor_notas and movieList_df["number of ratings"].iloc[int(j)] > 20:
+            st.write(f'Previsão de avaliação {my_predictions[j]:0.2f} para o filme {movieList[j]}')
+            i += 1
+        l += 1
+
+
+    st.header('Avaliação dada comparada ao do modelo treinado:')
+    for i in range(len(vetor_notas)):
+        if vetor_notas[i] > 0:
+            st.write("Filme: ", movieList[i], " . Nota dada pelo usuário:", vetor_notas[i]," Nota prevista: ", my_predictions[i])
 
 
